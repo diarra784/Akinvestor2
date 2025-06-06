@@ -1,0 +1,2259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akinvestor - Plateforme Ludique</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fffbe6;
+      color: #333;
+    }
+
+    header {
+      background: #FFD700;
+      text-align: center;
+      padding: 20px 10px;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+    }
+
+    nav {
+      margin-top: 15px;
+    }
+
+    nav a {
+      color: #333;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 600;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 30px 15px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 25px;
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 0.95em;
+    }
+
+    .hero {
+      background: url('hero-image.jpg') center/cover no-repeat;
+      height: auto;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .hero h2 {
+      background-color: rgba(255,255,255,0.8);
+      display: inline-block;
+      padding: 20px;
+      font-size: 2.5em;
+      border-radius: 10px;
+    }
+
+    .hero-subtitle {
+      margin-top: 20px;
+      font-size: 1.2em;
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 15px 20px;
+      border-radius: 8px;
+      max-width: 700px;
+      color: #444;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 30px;
+    }
+
+    footer {
+      background: #333;
+      color: #ccc;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 10px;
+      padding: 30px;
+      width: 90%;
+      max-width: 700px;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+
+    .fiche-list a {
+      display: block;
+      margin: 10px 0;
+      color: #0077cc;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .fiche-list a:hover {
+      text-decoration: underline;
+    }
+
+    .fiche-content h3 {
+      margin-top: 25px;
+      color: #222;
+    }
+
+    .fiche-content ul {
+      margin: 15px 0;
+      padding-left: 20px;
+    }
+
+    .fiche-content li {
+      margin-bottom: 10px;
+    }
+
+    .search-bar {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .search-bar input {
+      width: 60%;
+      padding: 12px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      border: 2px solid #ccc;
+    }
+    .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  color: #333;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1em;
+  cursor: pointer;
+  padding: 0 15px;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 220px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.dropdown-menu a {
+  color: #333;
+  padding: 12px 16px;
+  display: block;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f3f3f3;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+.sub-dropdown {
+  position: relative;
+}
+
+.sub-dropdown .dropdown-item {
+  padding: 12px 16px;
+  display: block;
+  cursor: pointer;
+  color: #333;
+  text-decoration: none;
+}
+
+.sub-menu {
+  display: none;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  min-width: 180px;
+  background-color: white;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  z-index: 1;
+  border-radius: 8px;
+}
+
+.sub-menu a {
+  padding: 12px 16px;
+  display: block;
+  text-decoration: none;
+  color: #333;
+}
+
+.sub-menu a:hover {
+  background-color: #f0f0f0;
+}
+
+.sub-dropdown:hover .sub-menu {
+  display: block;
+}
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none; /* Modal masqué par défaut */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* S'assurer qu'il est au-dessus des autres éléments */
+}
+
+.modal-content {
+  background: #fffdf7;
+  padding: 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-out;
+  font-family: 'Inter', sans-serif;
+}
+
+.modal-header {
+  border-bottom: none;
+  padding-bottom: 10px;
+}
+
+.modal-title {
+  font-size: 1.6em;
+  font-weight: 600;
+  color: #333;
+}
+
+.modal-body ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 15px;
+}
+
+.modal-body li {
+  margin-bottom: 15px;
+}
+
+.modal-body li a {
+  display: block;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 12px 18px;
+  text-decoration: none;
+  color: #0077cc;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.modal-body li a:hover {
+  background-color: #e6f2ff;
+}
+
+.close {
+  background: none;
+  border: none;
+  font-size: 1.8em;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.close:hover {
+  color: #000;
+}
+
+@keyframes fadeIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.profile-dropdown {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+.profile-dropdown .avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.profile-dropdown .profile-name {
+  margin-left: 8px;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.profile-dropdown .profile-menu {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  right: 0;
+  top: 100%;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  min-width: 180px;
+  z-index: 10;
+}
+
+.profile-dropdown:hover .profile-menu {
+  display: block;
+}
+
+.profile-menu a {
+  display: block;
+  padding: 12px 16px;
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.profile-menu a:hover {
+  background-color: #f0f0f0;
+}
+#user-profile {
+  display: inline-block;
+  position: relative;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+#user-profile .dropdown-menu {
+  right: 0;
+  left: auto;
+  position: absolute;
+}
+
+.video-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.video-item {
+  background-color: #fdfdfd;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+html {
+  scroll-behavior: smooth;
+}
+
+
+  </style>
+  
+</head>
+<body>
+  <header>
+    <h1>Akinvestor</h1>
+    <nav>
+<a href="#" onclick="location.reload(); return false;">Accueil</a>
+      <a href="#" onclick="openVideos()">Vidéos</a>
+    
+      <!-- Quiz menu déroulant -->
+      <div class="dropdown">
+        <span class="dropdown-toggle">Quiz </span>
+        <div class="dropdown-menu">
+          <div class="sub-dropdown">
+            <span class="dropdown-item" data-toggle="modal" data-target="#modalComptabilite">Comptabilité ▸</span>
+          </div>
+          <div class="sub-dropdown">
+            <span class="dropdown-item" data-toggle="modal" data-target="#modalMarches">Marchés financiers ▸</span>
+          </div>
+          <div class="sub-dropdown">
+            <span class="dropdown-item" data-toggle="modal" data-target="#modalInvestissement">Investissement ▸</span>
+          </div>
+          <div class="sub-dropdown">
+            <span class="dropdown-item" data-toggle="modal" data-target="#modalAnalyse">Analyse financière ▸</span>
+          </div>
+        </div>
+      </div>
+    
+<a href="#contact">Contact</a>
+      <!-- Profil utilisateur -->
+<div id="user-profile" class="dropdown" style="display: none;">
+  <img id="user-avatar" src="" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; vertical-align: middle;">
+  <span id="user-name" class="dropdown-toggle">Nom</span>
+  <div class="dropdown-menu">
+    <a href="#" id="view-progress">📊 Ma progression</a>
+    <a href="#" id="logout">🚪 Se déconnecter</a>
+  </div>
+</div>
+
+      <a href="#" id="showAbout" data-toggle="modal" data-target="#aboutModal">À propos</a>
+      
+      <!-- Modal À propos -->
+<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="aboutModalLabel">À propos d'Akinvestor</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="aboutModalBody">
+        <p>Akinvestor est une application éducative développée dans le cadre du projet P2IP à l'ESILV.</p>
+<p>Notre mission est de rendre la finance plus accessible, plus compréhensible et plus ludique pour les étudiants et les jeunes actifs.</p>
+<p><strong>Grâce à Akinvestor, vous avez accès à :</strong></p>
+<ul>
+  <li>des fiches synthétiques pour réviser efficacement,</li>
+  <li>des quizz interactifs pour tester vos connaissances,</li>
+  <li>des vidéos explicatives pour mieux comprendre les concepts clés,</li>
+  <li>et bien plus à venir !</li>
+</ul>
+<p><em>Projet encadré par l’ESILV</em><br>
+<em>Année 2025</em></p>
+
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<a href="#" data-toggle="modal" data-target="#authModal">Se connecter</a>
+
+<div class="profile-dropdown">
+<img id="userAvatar" src="images/avatar.jpg" alt="Avatar" style="height: 40px; width: 40px; border-radius: 50%;">
+  <span class="profile-name">Prénom</span>
+  <div class="dropdown-menu profile-menu">
+    <a href="#" id="viewProgress">📈 Voir progression</a>
+    <a href="#" id="viewRecommendations">📚 Recommandations</a>
+    <a href="#" id="logoutBtn">🚪 Se déconnecter</a>
+  </div>
+</div>
+
+
+    </nav>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>   
+    <!-- Modals pour chaque catégorie -->
+
+   <!-- Modal Comptabilite -->
+  <div class="modal fade" id="modalComptabilite" tabindex="-1" role="dialog" aria-labelledby="modalComptabiliteLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalComptabiliteLabel">Comptabilité - Choisissez un niveau</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Sélection du niveau -->
+          <ul>
+            <li><a href="#" id="debutantBtn" data-toggle="collapse" data-target="#niveauDebutant">Débutant</a></li>
+            <li><a href="#" id="intermediaireBtn" data-toggle="collapse" data-target="#niveauIntermediaire">Intermédiaire</a></li>
+            <li><a href="#" data-toggle="collapse" data-target="#niveauExpert">Expert</a></li>
+          </ul>
+  
+          <!-- Niveau Débutant -->
+          <div id="niveauDebutant" class="collapse">
+            <h6>1. Qu'est-ce qu'une action ?</h6>
+            <ul>
+              <li><button class="btn btn-link reponse" data-correct="false">A Un produit d'investissement avec un rendement fixe</button></li>
+              <li><button class="btn btn-link reponse" data-correct="true">B Une part de propriété dans une entreprise</button></li>
+              <li><button class="btn btn-link reponse" data-correct="false">C Un prêt accordé à une entreprise</button></li>
+              <li><button class="btn btn-link reponse" data-correct="false">D Un produit dérivé basé sur des matières premières</button></li>
+            </ul>
+            
+            <h6>2. Qu'est-ce qu'une obligation ?</h6>
+            <ul>
+              <li><button class="btn btn-link reponse" data-correct="false">A Un titre de propriété dans une entreprise</button></li>
+              <li><button class="btn btn-link reponse" data-correct="false">B Un produit d'investissement à court terme</button></li>
+              <li><button class="btn btn-link reponse" data-correct="true">C Un titre de créance émis par un gouvernement ou une entreprise</button></li>
+              <li><button class="btn btn-link reponse" data-correct="false">D Un bien immobilier à louer</button></li>
+            </ul>
+            
+            <h6>3. Les ETF sont des fonds qui...</h6>
+            <ul>
+              <li><button class="btn btn-link reponse" data-correct="false">A Investissent uniquement dans des actions</button></li>
+              <li><button class="btn btn-link reponse" data-correct="true">B Suivent un indice boursier ou un panier d'actifs</button></li>
+              <li><button class="btn btn-link reponse" data-correct="false">C Sont exclusivement des obligations</button></li>
+              <li><button class="btn btn-link reponse" data-correct="false">D Ne sont pas négociables en bourse</button></li>
+            </ul>
+          </div>
+  
+          <!-- Niveau Intermédiaire -->
+          <div id="niveauIntermediaire" class="collapse">
+            <h6>1. Par rapport aux actions, les obligations sont généralement considérées comme...</h6>
+            <ul>
+              <li><button class="btn btn-link reponse" data-correct="true">A Moins risquées</button></li>
+              <li><button class="btn btn-link reponse" data-correct="false">B Plus risquées</button></li>
+              <li><button class="btn btn-link reponse" data-correct="false">C Équivalentes en termes de risque</button></li>
+              <li><button class="btn btn-link reponse" data-correct="false">D Plus rentables</button></li>
+            </ul>
+            
+            <h6>2. Quel est l'avantage principal des ETF par rapport aux actions individuelles ?</h6>
+            <ul>
+              <li><button class="btn btn-link reponse" data-correct="false">A Les ETF permettent d'acheter une part d'un seul actif</button></li>
+              <li><button class="btn btn-link reponse" data-correct="true">B Les ETF offrent une diversification instantanée</button></li>
+              <li><button class="btn btn-link reponse" data-correct="false">C Les ETF ne sont pas soumis à des frais de gestion</button></li>
+              <li><button class="btn btn-link reponse" data-correct="false">D Les ETF sont exempts de taxes</button></li>
+            </ul>
+          </div>
+
+          <!-- Niveau Expert -->
+          <div id="niveauExpert" class="collapse">
+            <h6>1. Quel est le rôle de l'amortissement dans les comptes d'une entreprise ?</h6>
+            <ul>
+              <li><button class="btn btn-link reponse" data-correct="false">A Il reflète une perte de valeur temporaire d’un actif</button></li>
+              <li><button class="btn btn-link reponse" data-correct="true">B Il répartit le coût d’un actif sur sa durée d’utilisation</button></li>
+              <li><button class="btn btn-link reponse" data-correct="false">C Il représente une sortie de trésorerie réelle</button></li>
+              <li><button class="btn btn-link reponse" data-correct="false">D Il sert uniquement à réduire les impôts</button></li>
+            </ul>
+
+            <h6>2. Quelle est la différence entre charge et immobilisation ?</h6>
+            <ul>
+              <li><button class="btn btn-link reponse" data-correct="false">A Les deux sont des dépenses immédiates</button></li>
+              <li><button class="btn btn-link reponse" data-correct="true">B Une charge impacte immédiatement le résultat, l'immobilisation est amortie</button></li>
+              <li><button class="btn btn-link reponse" data-correct="false">C Une charge concerne uniquement les salaires</button></li>
+              <li><button class="btn btn-link reponse" data-correct="false">D Une immobilisation est toujours déductible</button></li>
+            </ul>
+          </div>
+
+
+  
+          <!-- Message pour les réponses -->
+          <div id="message" class="mt-3" style="display:none;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Script JS -->
+  <script>
+    // Fonction qui gère les réponses
+    document.querySelectorAll('.reponse').forEach(button => {
+      button.addEventListener('click', function() {
+        const isCorrect = this.getAttribute('data-correct') === 'true';
+        const messageElement = document.getElementById('message');
+        
+        // Affichage du message en fonction de la réponse
+        if (isCorrect) {
+          messageElement.textContent = 'Bonne réponse !';
+          messageElement.style.color = 'green';
+        } else {
+          messageElement.textContent = 'Mauvaise réponse, essayez encore !';
+          messageElement.style.color = 'red';
+        }
+        
+        messageElement.style.display = 'block';
+        
+        // Réinitialisation du message après 2 secondes
+        setTimeout(() => {
+          messageElement.style.display = 'none';
+        }, 2500); // 2500 ms =  2,5 secondes
+      });
+    });
+  </script>
+  
+  
+
+    <!-- Modal Marchés financiers -->
+   <!-- Modal Marchés Financiers -->
+    
+<div class="modal fade" id="modalMarches" tabindex="-1" role="dialog" aria-labelledby="modalMarchesFinanciersLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalMarchesFinanciersLabel">Marchés Financiers - Choisissez un niveau</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li><a href="#" data-toggle="collapse" data-target="#niveauMFdebutant">Débutant</a></li>
+          <li><a href="#" data-toggle="collapse" data-target="#niveauMFintermediaire">Intermédiaire</a></li>
+          <li><a href="#" data-toggle="collapse" data-target="#niveauExpertMarches">Expert</a></li>
+        </ul>
+
+        <!-- Niveau Débutant -->
+        <div id="niveauMFdebutant" class="collapse">
+          <h6>1. L'intérêt composé permet...</h6>
+          <ul>
+            <li><button class="btn btn-link reponse" data-correct="false">A D'économiser de l'argent sans intérêt</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">B De calculer l'intérêt uniquement sur le montant initial</button></li>
+            <li><button class="btn btn-link reponse" data-correct="true">C D'accumuler des intérêts sur le principal ainsi que sur les intérêts déjà gagnés</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">D De réduire les frais d'investissement</button></li>
+          </ul>
+
+          <h6>2. La diversification est...</h6>
+          <ul>
+            <li><button class="btn btn-link reponse" data-correct="true">A Un moyen de réduire les risques en investissant dans une variété d'actifs</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">B Une stratégie consistant à investir uniquement dans des actions</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">C Une méthode d'achat de titres à court terme</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">D Une technique pour obtenir des rendements maximaux en peu de temps</button></li>
+          </ul>
+        </div>
+
+        <!-- Niveau Intermédiaire -->
+        <div id="niveauMFintermediaire" class="collapse">
+          <h6>1. Les options sont des instruments financiers qui donnent...</h6>
+          <ul>
+            <li><button class="btn btn-link reponse" data-correct="true">A Le droit, mais pas l'obligation, d'acheter ou de vendre un actif sous-jacent à un prix fixé à l'avance</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">B L'obligation d'acheter ou de vendre un actif sous-jacent à un prix fixé</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">C La possibilité de gagner de l'argent uniquement à court terme</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">D La possibilité de sécuriser des profits sans risque</button></li>
+          </ul>
+
+          <h6>2. Un des avantages de la diversification est...</h6>
+          <ul>
+            <li><button class="btn btn-link reponse" data-correct="false">A La garantie de profits à court terme</button></li>
+            <li><button class="btn btn-link reponse" data-correct="true">B La réduction des risques en équilibrant les pertes potentielles avec des gains dans différents secteurs</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">C La possibilité d'éviter les taxes sur les investissements</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">D Le rendement plus élevé avec moins d'effort</button></li>
+          </ul>
+        </div>
+
+        <!-- Niveau Expert -->
+    <div id="niveauExpertMarches" class="collapse">
+      <h6>1. Quel est le rôle principal des produits dérivés sur les marchés financiers ?</h6>
+      <ul>
+        <li><button class="btn btn-link reponse" data-correct="true">A Couvrir ou transférer les risques</button></li>
+        <li><button class="btn btn-link reponse" data-correct="false">B Acheter directement des actions</button></li>
+        <li><button class="btn btn-link reponse" data-correct="false">C Mesurer la capitalisation boursière</button></li>
+        <li><button class="btn btn-link reponse" data-correct="false">D Créer de la monnaie centrale</button></li>
+      </ul>
+
+      <h6>2. Le ratio Sharpe permet de :</h6>
+      <ul>
+        <li><button class="btn btn-link reponse" data-correct="false">A Mesurer la liquidité d’un actif</button></li>
+        <li><button class="btn btn-link reponse" data-correct="false">B Calculer la duration d’une obligation</button></li>
+        <li><button class="btn btn-link reponse" data-correct="true">C Évaluer la performance corrigée du risque</button></li>
+        <li><button class="btn btn-link reponse" data-correct="false">D Déterminer la volatilité absolue d’un actif</button></li>
+      </ul>
+    </div>
+
+
+        <!-- Message de retour -->
+      <div id="message1" class="mt-3" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JS de feedback -->
+<script>
+  document.querySelectorAll('.reponse').forEach(button => {
+    button.addEventListener('click', function () {
+      const isCorrect = this.getAttribute('data-correct') === 'true';
+      const messageElement = document.getElementById('message1'); // Message spécifique pour les marchés financiers
+
+      if (isCorrect) {
+        messageElement.textContent = 'Bonne réponse !';
+        messageElement.style.color = 'green';
+      } else {
+        messageElement.textContent = 'Mauvaise réponse, essayez encore !';
+        messageElement.style.color = 'red';
+      }
+
+      messageElement.style.display = 'block';
+
+      setTimeout(() => {
+        messageElement.style.display = 'none';
+      }, 2500);
+    });
+  });
+</script>
+
+
+    
+    <!-- Modal Investissement -->
+<div class="modal fade" id="modalInvestissement" tabindex="-1" role="dialog" aria-labelledby="modalInvestissementLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalInvestissementLabel">Investissement - Choisissez un niveau</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Sélection du niveau -->
+        <ul>
+          <li><a href="#" id="debutantBtn" data-toggle="collapse" data-target="#niveauDebutant">Débutant</a></li>
+          <li><a href="#" id="intermediaireBtn" data-toggle="collapse" data-target="#niveauIntermediaire">Intermédiaire</a></li>
+          <li><a href="#" data-toggle="collapse" data-target="#niveauInvestissementExpert">Expert</a></li>
+        </ul>
+
+        <!-- Niveau Débutant -->
+        <div id="niveauDebutant" class="collapse">
+          <h6>1. Les cryptomonnaies sont...</h6>
+          <ul>
+            <li><button class="btn btn-link reponse" data-correct="false">A Des monnaies physiques utilisées pour acheter des biens</button></li>
+            <li><button class="btn btn-link reponse" data-correct="true">B Des devises numériques basées sur une technologie décentralisée</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">C Des actions cotées en bourse</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">D Des titres de créance</button></li>
+          </ul>
+          
+          <h6>2. L'investissement immobilier consiste à...</h6>
+          <ul>
+            <li><button class="btn btn-link reponse" data-correct="false">A Acheter des actions dans une société immobilière</button></li>
+            <li><button class="btn btn-link reponse" data-correct="true">B Investir dans des terrains ou des biens pour générer des revenus ou des plus-values</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">C Acheter des obligations d'une société immobilière</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">D Prêter de l'argent à une entreprise du secteur immobilier</button></li>
+          </ul>
+        </div>
+
+        <!-- Niveau Intermédiaire -->
+        <div id="niveauIntermediaire" class="collapse">
+          <h6>1. Quels sont les principaux risques liés à l'investissement dans les cryptomonnaies ?</h6>
+          <ul>
+            <li><button class="btn btn-link reponse" data-correct="true">A Volatilité et manque de réglementation</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">B Stabilité et sécurité</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">C Absence de frais de transaction</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">D Rentabilité garantie</button></li>
+          </ul>
+          
+          <h6>2. Quels sont les types de frais les plus courants associés aux investissements ?</h6>
+          <ul>
+            <li><button class="btn btn-link reponse" data-correct="true">A Frais de courtage, de gestion et de transaction</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">B Frais de logement et de taxe d'habitation</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">C Frais liés aux obligations fiscales</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">D Frais d'inscription à des séminaires</button></li>
+          </ul>
+        </div>
+
+        <!-- Niveau Expert -->
+    <div id="niveauInvestissementExpert" class="collapse">
+      <h6>1. Qu’est-ce que le concept de “Beta” d’un actif financier ?</h6>
+      <ul>
+        <li><button class="btn btn-link reponse" data-correct="true">A Une mesure de la sensibilité d’un actif par rapport au marché</button></li>
+        <li><button class="btn btn-link reponse" data-correct="false">B Le ratio entre le rendement net et le dividende brut</button></li>
+        <li><button class="btn btn-link reponse" data-correct="false">C Une prime de risque systématique</button></li>
+        <li><button class="btn btn-link reponse" data-correct="false">D Le temps nécessaire pour doubler un investissement</button></li>
+      </ul>
+
+      <h6>2. Quelle est l’utilité du modèle CAPM en finance ?</h6>
+      <ul>
+        <li><button class="btn btn-link reponse" data-correct="false">A Déterminer le prix actuel d’un bien immobilier</button></li>
+        <li><button class="btn btn-link reponse" data-correct="true">B Évaluer le rendement attendu d’un actif en fonction de son risque</button></li>
+        <li><button class="btn btn-link reponse" data-correct="false">C Calculer les intérêts composés d’un placement</button></li>
+        <li><button class="btn btn-link reponse" data-correct="false">D Définir la stratégie d’allocation obligataire optimale</button></li>
+      </ul>
+    </div>
+
+        <!-- Message pour les réponses -->
+        <div id="message3" class="mt-3" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Script JS -->
+<script>
+  // Fonction qui gère les réponses
+  document.querySelectorAll('.reponse').forEach(button => {
+    button.addEventListener('click', function() {
+      const isCorrect = this.getAttribute('data-correct') === 'true';
+      const messageElement = document.getElementById('message3');
+      
+      // Affichage du message en fonction de la réponse
+      if (isCorrect) {
+        messageElement.textContent = 'Bonne réponse !';
+        messageElement.style.color = 'green';
+      } else {
+        messageElement.textContent = 'Mauvaise réponse, essayez encore !';
+        messageElement.style.color = 'red';
+      }
+      
+      messageElement.style.display = 'block';
+      
+      // Réinitialisation du message après 2 secondes
+      setTimeout(() => {
+        messageElement.style.display = 'none';
+      }, 2500); // 2500 ms = 2,5 secondes
+    });
+  });
+</script>
+
+ 
+    
+    <!-- Modal Analyse financière -->
+    <!-- Modal HTML pour les QCM -->
+<div class="modal fade" id="modalAnalyse" tabindex="-1" role="dialog" aria-labelledby="modalAnalyseFinanciereLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalAnalyseFinanciereLabel">Analyse Financière - Choisissez un niveau</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Sélection du niveau -->
+        <ul>
+          <li><a href="#" id="debutantBtn" data-toggle="collapse" data-target="#niveauDebutant">Débutant</a></li>
+          <li><a href="#" id="intermediaireBtn" data-toggle="collapse" data-target="#niveauIntermediaire">Intermédiaire</a></li>
+          <li><a href="#" data-toggle="collapse" data-target="#niveauAnalyseExpert">Expert</a></li>
+        </ul>
+
+        <!-- Niveau Débutant -->
+        <div id="niveauDebutant" class="collapse">
+          <h6>1. Les dividendes sont...</h6>
+          <ul>
+            <li><button class="btn btn-link reponse" data-correct="false">A Les gains réalisés sur la vente d'actions</button></li>
+            <li><button class="btn btn-link reponse" data-correct="true">B Les paiements faits par une entreprise à ses actionnaires en fonction des bénéfices</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">C Des primes versées aux employés</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">D Les intérêts payés sur des obligations</button></li>
+          </ul>
+          
+          <h6>2. Les comptes de retraite comme le PERP sont destinés à...</h6>
+          <ul>
+            <li><button class="btn btn-link reponse" data-correct="true">A Augmenter les revenus mensuels pendant la retraite</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">B Investir dans des actions à court terme</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">C Economiser pour des achats immédiats</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">D Financer des frais d'études</button></li>
+          </ul>
+        </div>
+
+        <!-- Niveau Intermédiaire -->
+        <div id="niveauIntermediaire" class="collapse">
+          <h6>1. Les arnaques en investissement sont souvent basées sur...</h6>
+          <ul>
+            <li><button class="btn btn-link reponse" data-correct="true">A Des promesses de rendements rapides et élevés</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">B Des conseils en matière d'assurance vie</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">C Des recommandations d'investissements en actions solides</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">D Des offres de produits dérivés sécurisés</button></li>
+          </ul>
+          
+          <h6>2. Le principal avantage des dividendes pour un investisseur est...</h6>
+          <ul>
+            <li><button class="btn btn-link reponse" data-correct="false">A L'augmentation immédiate de la valeur des actions</button></li>
+            <li><button class="btn btn-link reponse" data-correct="true">B Les paiements réguliers en espèces ou en actions qui génèrent un revenu passif</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">C L'absence totale de risque financier</button></li>
+            <li><button class="btn btn-link reponse" data-correct="false">D L'absence d'impôts</button></li>
+          </ul>
+        </div>
+
+        <!-- Niveau Expert -->
+      <div id="niveauAnalyseExpert" class="collapse">
+        <h6>1. Qu’est-ce que le Free Cash Flow (FCF) ?</h6>
+        <ul>
+          <li><button class="btn btn-link reponse" data-correct="true">A Flux de trésorerie disponible après investissements</button></li>
+          <li><button class="btn btn-link reponse" data-correct="false">B Somme des dividendes versés sur un exercice</button></li>
+          <li><button class="btn btn-link reponse" data-correct="false">C Montant total des dettes à long terme</button></li>
+          <li><button class="btn btn-link reponse" data-correct="false">D Chiffre d’affaires net des charges variables</button></li>
+        </ul>
+
+        <h6>2. Quel est l’objectif principal de l’analyse du ROI (Return on Investment) ?</h6>
+        <ul>
+          <li><button class="btn btn-link reponse" data-correct="false">A Évaluer la solvabilité court terme d’une entreprise</button></li>
+          <li><button class="btn btn-link reponse" data-correct="false">B Calculer le rendement net des capitaux propres</button></li>
+          <li><button class="btn btn-link reponse" data-correct="true">C Mesurer l’efficacité d’un investissement par rapport à son coût</button></li>
+          <li><button class="btn btn-link reponse" data-correct="false">D Comparer le chiffre d’affaires avec la dette nette</button></li>
+        </ul>
+      </div>
+
+
+        <!-- Message pour les réponses -->
+        <div id="message2" class="mt-3" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Script JS -->
+<script>
+  document.querySelectorAll('.reponse').forEach(button => {
+    button.addEventListener('click', function () {
+      const isCorrect = this.getAttribute('data-correct') === 'true';
+      const messageElement = document.getElementById('message2');
+
+      // Affiche le message en fonction de la réponse
+      if (isCorrect) {
+        messageElement.textContent = 'Bonne réponse !';
+        messageElement.style.color = 'green';
+      } else {
+        messageElement.textContent = 'Mauvaise réponse, essayez encore !';
+        messageElement.style.color = 'red';
+      }
+
+      // Affiche le message
+      messageElement.style.display = 'block';
+
+      // Cache le message après 2.5 secondes
+      setTimeout(() => {
+        messageElement.style.display = 'none';
+      }, 2500);
+    });
+  });
+</script>
+
+    
+  </header>
+  
+
+  <div class="hero">
+    <div>
+      <h2>Apprenez la finance en vous amusant</h2>
+      <p class="hero-subtitle">
+        Comprendre l’argent, c’est se protéger. Avec Akinvestor, découvrez les bases de la finance à votre rythme, sans jargon ni pression.
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="section-title">Explorez notre contenu</div>
+    <div class="card-grid">
+      <div class="card" onclick="openModal()" style="cursor: pointer;">
+        <h3>📘 Fiches interactives</h3>
+        <p>Des résumés clairs pour apprendre les bases de la finance.</p>
+      </div>
+
+        <div class="card" onclick="openVideos()" style="cursor: pointer;">
+        <h3>🎬 Vidéos explicatives</h3>
+    <p>Des vidéos animées pour tout comprendre visuellement.</p>
+  </div>
+
+      <div class="card" onclick="openQuizModal()" style="cursor: pointer;">
+  <h3>🧠 Quiz interactifs</h3>
+  <p>Testez vos connaissances tout en vous amusant !</p>
+</div>
+
+    </div>
+  </div>
+
+  <!-- MODAL INTERACTIVE -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <div class="search-bar">
+        <input type="text" placeholder="Rechercher une fiche..." onkeyup="searchFiches(this.value)">
+      </div>
+      <div id="modal-content-inner">
+        <div class="fiche-list" id="ficheList">
+          <a href="#" onclick="showFiche('intro')">📘 Introduction aux marchés financiers</a>
+          <a href="#" onclick="showFiche('fondamentale-vs-technique')">📘 Analyse fondamentale vs technique</a>
+          <a href="#" onclick="showFiche('diversification')">📘 Diversification</a>
+          <a href="#" onclick="showFiche('indice-boursier')">📘 Indice Boursier</a> 
+          <a href="#" onclick="showFiche('interet-compose')">📘 Intérêt composé</a>
+          <a href="#" onclick="showFiche('arnaques-en-investissement')">📘 Arnaques en investissement</a> 
+          <a href="#" onclick="showFiche('actions-vs-obligations')">📘 Actions vs Obligations</a> 
+          <a href="#" onclick="showFiche('quantitative-vs-qualitative')">📘Quantitative vs Qualitative</a> 
+          <a href="#" onclick="showFiche('banques-centrales')">📘Banques centrales</a> 
+          <a href="#" onclick="showFiche('biais-cognitifs')">📘Biais Cognitifs</a>
+          <a href="#" onclick="showFiche('panique-bulles')">📘Panique bulles</a>
+          <a href="#" onclick="showFiche('correlation-actifs')">📘Correlation actifs</a>
+          <a href="#" onclick="showFiche('cycles-economiques-bourse')">📘Cycles economiques bourse</a>
+          <a href="#" onclick="showFiche('etf-vs-fonds-mutuels')">📘Etf vs fonds mutuels</a>
+          <a href="#" onclick="showFiche('inflation-et-investissement')">📘Inflation et investissement</a>
+          <a href="#" onclick="showFiche('investir-selon-horizon-de-temps')">📘Investir selon horizon de temps</a>
+          <a href="#" onclick="showFiche('importance-de-la-patience')">📘Importance de la patience</a>
+          <a href="#" onclick="showFiche('market-timing')">📘Market Timing</a>
+          <a href="#" onclick="showFiche('dividendes')">📘 Dividendes </a>
+          <a href="#" onclick="showFiche('money-management')">📘 Money management</a>
+          <a href="#" onclick="showFiche('price-earning-ratio')">📘 Price earning ratio</a>
+          <a href="#" onclick="showFiche('definir-son-profil-investisseur')">📘 Definir son profil investisseur</a>
+          <a href="#" onclick="showFiche('short-selling-vente-a-decouvert')">📘 Short selling vente a decouvert </a>
+          <a href="#" onclick="showFiche('stop-loss-take-profit')">📘 Stop loss take profit </a>
+          <a href="#" onclick="showFiche('valeur-intrinseque-prix-marche')">📘 Valeur intrinseque prix marche </a>
+          <a href="#" onclick="showFiche('volatilite-mesure-impact')">📘 Volatilite mesure impact </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openModal() {
+      document.getElementById("modal").style.display = "flex";
+      document.getElementById("modal-content-inner").innerHTML = `
+        <div class='fiche-list'>
+          <a href='#' onclick="showFiche('intro')">📘 Introduction aux marchés financiers</a>
+          <a href='#' onclick="showFiche('fondamentale-vs-technique')">📘 Analyse fondamentale vs technique</a>
+          <a href='#' onclick="showFiche('diversification')">📘 Diversification</a>
+          <a href='#' onclick="showFiche('indice-boursier')">📘 Indice Boursier</a> 
+          <a href="#" onclick="showFiche('interet-compose')">📘 Intérêt Composé</a> 
+          <a href="#" onclick="showFiche('arnaques-en-investissement')">📘 Arnaques en investissement</a>
+          <a href="#" onclick="showFiche('actions-vs-obligations')">📘 Actions vs Obligations</a>
+          <a href="#" onclick="showFiche('quantitative-vs-qualitative')">📘 Quantitative vs Qualitative</a>
+          <a href="#" onclick="showFiche('banques-centrales')">📘 Banques centrales</a>
+          <a href="#" onclick="showFiche('biais-cognitifs')">📘 Biais Cognitifs</a>
+          <a href="#" onclick="showFiche('panique-bulles')">📘 Panique bulles</a>
+          <a href="#" onclick="showFiche('correlation-actifs')">📘 Correlation actifs</a>
+          <a href="#" onclick="showFiche('cycles-economiques-bourse')">📘 Cycles economiques bourse</a>
+          <a href="#" onclick="showFiche('etf-vs-fonds-mutuels')">📘 Etf vs fonds mutuels</a>
+          <a href="#" onclick="showFiche('inflation-et-investissement')">📘 Inflation et investissement</a>
+          <a href="#" onclick="showFiche('investir-selon-horizon-de-temps')">📘 Investir selon horizon de temps</a>
+          <a href="#" onclick="showFiche('importance-de-la-patience')">📘 Importance de la patience</a>
+          <a href="#" onclick="showFiche('market-timing')">📘 Market Timing</a>
+          <a href="#" onclick="showFiche('dividendes')">📘 Dividendes </a>
+          <a href="#" onclick="showFiche('money-management')">📘 Money management</a>
+          <a href="#" onclick="showFiche('price-earning-ratio')">📘 Price earning ratio</a>
+          <a href="#" onclick="showFiche('definir-son-profil-investisseur')">📘 Definir son profil investisseur</a>
+          <a href="#" onclick="showFiche('short-selling-vente-a-decouvert')">📘 Short selling vente a decouvert </a>
+          <a href="#" onclick="showFiche('stop-loss-take-profit')">📘 Stop loss take profit </a>
+          <a href="#" onclick="showFiche('valeur-intrinseque-prix-marche')">📘 Valeur intrinseque prix marche </a>
+          <a href="#" onclick="showFiche('volatilite-mesure-impact')">📘 Volatilite mesure impact </a>
+
+
+
+
+        </div>`;
+    }
+    
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    function showFiche(id) {
+      if (id === 'intro') {
+        document.getElementById("modal-content-inner").innerHTML = `
+          <div class='fiche-content'>
+            <h2>📘 Introduction aux marchés financiers</h2>
+            <h3>Définition</h3>
+            <p>Les marchés financiers sont des espaces où se rencontrent acheteurs et vendeurs d'instruments financiers (actions, obligations, devises). Ils permettent :</p>
+            <ul>
+              <li>le financement des entreprises et des gouvernements,</li>
+              <li>la gestion des risques,</li>
+              <li>et les investissements.</li>
+            </ul>
+            <h3>Types de marchés</h3>
+            <ul>
+              <li><strong>Marché primaire :</strong> les titres sont émis pour la première fois.</li>
+              <li><strong>Marché secondaire :</strong> les titres sont échangés entre investisseurs.</li>
+              <li><strong>Marché des capitaux :</strong> investissements à long terme.</li>
+              <li><strong>Marché monétaire :</strong> instruments à court terme comme les bons du Trésor.</li>
+            </ul>
+            <h3>Fonctionnement</h3>
+            <p>Les marchés fonctionnent selon l’offre et la demande. Les investisseurs achètent bas et revendent plus cher. Ils sont régulés pour garantir transparence et stabilité.</p>
+            <h3>Exemples</h3>
+            <ul>
+              <li>Marché primaire : IPO de Tesla</li>
+              <li>Marché secondaire : achat d’actions en bourse</li>
+            </ul>
+             <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+          </div>
+        `;
+      } else if (id === 'fondamentale-vs-technique') {
+        document.getElementById("modal-content-inner").innerHTML = `
+          <div class='fiche-content'>
+            <h2>📘 Analyse fondamentale vs technique</h2>
+
+  <h3>Analyse fondamentale</h3>
+  <p><strong>Objectif :</strong> évaluer la vraie valeur d’un actif.</p>
+  <p><strong>Critères clés :</strong> chiffres d’affaires, bénéfices, croissance.</p>
+  <p><strong>Définition :</strong> étude des performances économiques et financières de l’entreprise ou de l’actif.</p>
+
+  <h3>Analyse technique</h3>
+  <p><strong>Définition :</strong> étude des graphiques et tendances passées des prix.</p>
+  <p><strong>Objectif :</strong> anticiper l’évolution future des prix en analysant les tendances historiques.</p>
+  <p><strong>Critères clés :</strong> tendances, indicateurs graphiques, volumes échangés.</p>
+
+  <h3>Différences</h3>
+  <ul>
+    <li><strong>Analyse fondamentale :</strong> se concentre sur la valeur intrinsèque et privilégie le long terme.</li>
+    <li><strong>Analyse technique :</strong> se concentre sur l’évolution des prix et privilégie le court terme.</li>
+    <li><strong>Outils différents :</strong> comptes financiers et bilans pour la fondamentale vs graphiques et indicateurs pour la technique.</li>
+  </ul>
+
+  <h3>Quand et comment les utiliser</h3>
+  <ul>
+    <li><strong>Analyse fondamentale :</strong> idéale pour choisir des investissements à long terme, basés sur la valeur réelle de l’actif.</li>
+    <li><strong>Analyse technique :</strong> utilisée pour identifier des opportunités à court terme, en se basant sur les tendances et mouvements passés.</li>
+    <li><strong>Combiner les deux :</strong> une approche complémentaire pour optimiser ses choix d’investissement, en utilisant les points forts des deux méthodes.</li>
+  </ul>
+   <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+</div>
+        `;
+      } else if (id === 'diversification') {
+        document.getElementById("modal-content-inner").innerHTML = `
+          <div class='fiche-content'>
+            <h2>📘 Diversification</h2>
+            <h3>Définition</h3>
+            <p>La diversification consiste à répartir ses investissements afin de réduire le risque global. L’objectif est de ne pas mettre tous ses œufs dans le même panier.</p>
+            <h3>Pourquoi diversifier ?</h3>
+            <ul>
+              <li>Optimiser le rendement : Équilibre entre risque et rentabilité.</li>
+              <li>Stabiliser la performance : Moins de fluctuations brutales.</li>
+              <li>Limiter les pertes : Si un investissement chute, les autres peuvent compenser.</li>
+            </ul>
+            <h3>Comment diversifier ?</h3>
+            <ul>
+              <li>Secteurs variés : Industrie, santé, technologie...</li>
+              <li>Zones géographiques : Europe, USA, marchés émergents...</li>
+              <li>Types d'actifs : Actions, obligations, immobilier...</li>
+            </ul>
+            <h3>Stratégie de diversification</h3>
+            <ul>
+              <li>Investir via ETF : Accès facile à plusieurs marchés.</li>
+              <li>Gestion régulière : Rééquilibrer périodiquement le portefeuille.</li>
+              <li>Adapter à son profil : Selon âge, objectifs et tolérance au risque.</li>
+            </ul>
+             <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+          </div>
+        `;
+      } else if (id === 'indice-boursier') {  
+        document.getElementById("modal-content-inner").innerHTML = `
+          <div class='fiche-content'>
+             <h2>📘 Indice Boursier</h2>
+        <h3>Définition</h3>
+        <p>Performance d'un ensemble d'actions cotées sur les marchés. Cela permet de savoir rapidement si les marchés montent ou baissent, et résume simplement la performance globale d’un marché boursier.</p>
+        
+        <h3>Utilité</h3>
+        <ul>
+          <li><strong>Mesurer l’économie :</strong> une hausse de l’indice signifie généralement un dynamisme économique.</li>
+          <li><strong>Simplifier l’investissement :</strong> un indice permet de suivre un marché entier facilement.</li>
+          <li><strong>Accessibilité :</strong> investir dès petits montants grâce aux ETF (fonds négociés en bourse).</li>
+        </ul>
+        
+        <h3>Principe</h3>
+        <ul>
+          <li><strong>Composition :</strong> un indice regroupe des actions selon la taille, le secteur ou le pays.</li>
+          <li><strong>Valeur :</strong> l’indice évolue avec ses actions.</li>
+          <li><strong>Diversification facile :</strong> un seul indice suffit pour une bonne diversification.</li>
+        </ul>
+        
+        <h3>Exemples</h3>
+        <ul>
+          <li><strong>CAC 40 (France) :</strong> regroupe les 40 plus grandes entreprises françaises.</li>
+          <li><strong>S&P 500 (États-Unis) :</strong> regroupe les 500 grandes entreprises américaines.</li>
+          <li><strong>NASDAQ (États-Unis) :</strong> regroupe principalement des entreprises américaines dans le secteur technologique.</li>
+        </ul>
+        
+        <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+      </div>
+        `;
+      }else if (id === 'interet-compose') {
+    document.getElementById("modal-content-inner").innerHTML = `
+      <div class='fiche-content'>
+        <h2>📘 Intérêt Composé</h2>
+            <h3>Définition</h3>
+            <ul>
+              <li>Les intérêts sont calculés sur les intérêts déjà gagnés.</li>
+              <li>Effet boule de neige : les gains augmentent de plus en plus vite.</li>
+              <li>Moteur puissant : accélère la croissance du capital.</li>
+            </ul>
+            <h3>Pourquoi</h3>
+            <ul>
+              <li>Moins d'effort : l'argent placé tôt travaille pour vous longtemps.</li>
+              <li>Rentabilité : maximise l'impact du temps et du rendement.</li>
+              <li>Croissance exponentielle : petits gains deviennent grands avec le temps.</li>
+            </ul>
+            <h3>Comment</h3>
+            <ul>
+              <li>Commencer tôt : laisser le temps amplifier les gains.</li>
+              <li>Investir régulièrement : même de petites sommes suffisent.</li>
+              <li>Ne pas retirer trop tôt : préserver la dynamique de croissance.</li>
+            </ul>
+            <h3>Exemples</h3>
+            <ul>
+              <li>Épargne jeune : petites sommes deviennent grandes.</li>
+              <li>Versements réguliers : petits montants, gros résultats.</li>
+              <li>Retraite : capitaliser progressivement.</li>
+            </ul>
+            <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+          </div>
+    `;
+}else if (id === 'arnaques-en-investissement') {
+    document.getElementById("modal-content-inner").innerHTML = `
+      <div class='fiche-content'>
+        <h2>Les Arnaques en Investissement : Comment les Éviter</h2>
+
+    <h3>Types d'Arnaques</h3>
+    <ul>
+        <li><strong>Arnaques à la Ponzi</strong> : Les gains sont payés avec l'argent des nouveaux investisseurs.</li>
+        <li><strong>Phishing</strong> : Des escrocs se font passer pour des institutions financières pour voler des informations personnelles.</li>
+        <li><strong>Faux investissements</strong> : Proposition d’investissements dans des produits fictifs.</li>
+        <li><strong>Faux conseils financiers</strong> : Conseils financiers d'individus non agréés.</li>
+    </ul>
+
+    <h3>Identifier une Arnaque</h3>
+    <ul>
+        <li><strong>Promesses de rendements élevés et rapides sans risques</strong>.</li>
+        <li><strong>Manque de transparence ou d’informations claires</strong>.</li>
+        <li><strong>Pression pour investir rapidement</strong>.</li>
+    </ul>
+
+    <h3>Se Protéger</h3>
+    <ul>
+        <li><strong>Vérifier les informations</strong> : Assurez-vous de la légitimité via les régulateurs financiers (ex. AMF, SEC).</li>
+        <li><strong>Ne pas céder à la pression</strong> : Un investissement légitime offre le temps de réfléchir.</li>
+        <li><strong>Protéger ses données personnelles</strong> : Ne jamais divulguer des informations sensibles par email ou téléphone.</li>
+    </ul>
+
+    <h3>Exemples</h3>
+    <ul>
+        <li><strong>Bernie Madoff</strong> : Fraude à la Ponzi massive.</li>
+        <li><strong>Phishing</strong> : Email prétendant venir de votre banque pour "confirmer" vos informations.</li>
+        <li><strong>Investissements fictifs</strong> : Offres d’investissements dans des projets inexistants (ex. mines d’or imaginaires).</li>
+    </ul>
+    <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+</div>
+    `;
+    }else if (id === 'actions-vs-obligations') {
+    document.getElementById("modal-content-inner").innerHTML = `
+    <div class='fiche-content'>
+        <h2>📘 Actions vs Obligations</h2>
+        <h4>Définition</h4>
+        <ul>
+          <li><strong>Action :</strong> part de propriété dans une entreprise</li>
+          <li><strong>Obligation :</strong> prêt fait à une entreprise ou un État</li>
+          <li><strong>L’une est variable et risquée, l’autre plus stable mais plafonnée</li>
+        </ul>
+
+        <h4>Différences</h4>
+        <ul>
+          <li><strong>Rendement :</strong> dividendes (actions) vs intérêts (obligations)</li>
+          <li><strong>Risque :</strong> plus élevé pour les actions, plus prévisible pour les obligations</li>
+          <li><strong>Priorité :</strong> les obligataires sont remboursés avant les actionnaires en cas de faillite</li>
+        </ul>
+
+        <h4>Complémentarité</h4>
+        <ul>
+          <li><strong>Actions :</strong> croissance, dynamisme</li>
+          <li><strong>Obligations :</strong> stabilité, protection</li>
+          <li>Un portefeuille équilibré combine les deux</li>
+        </ul>
+
+        <h4>À Retenir</h4>
+        <ul>
+          <li>Choisir selon son profil : prudent ou dynamique</li>
+          <li>Les obligations protègent en période de volatilité</li>
+          <li>Les actions surperforment sur le long terme, mais avec plus de risques</li>
+        </ul>
+            <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+      </div>
+      `;
+  } else if (id === 'quantitative-vs-qualitative') {
+  document.getElementById("modal-content-inner").innerHTML = `
+    <div class='fiche-content'>
+      <h2>📊 Analyse Quantitative vs Qualitative</h2>
+
+      <h3>Quantitative</h3>
+      <ul>
+        <li>Basée sur des chiffres : revenus, marges, ratios financiers</li>
+        <li>Objective et mesurable, issue des rapports d’entreprise</li>
+        <li>Utilise des outils comme PER, ROE, croissance du chiffre d'affaires</li>
+      </ul>
+
+      <h3>Qualitative</h3>
+      <ul>
+        <li>Analyse des éléments intangibles : marque, équipe, innovation</li>
+        <li>Se concentre sur la qualité du business model</li>
+        <li>Évalue la stratégie, le positionnement, les avantages concurrentiels</li>
+      </ul>
+
+      <h3>Complémentarité</h3>
+      <ul>
+        <li><strong>Quantitatif :</strong> pour comparer, mesurer, filtrer</li>
+        <li><strong>Qualitatif :</strong> pour juger du potentiel à long terme</li>
+        <li>Ensemble, ils donnent une vision plus complète</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>Ne pas se fier uniquement aux chiffres</li>
+        <li>Les meilleurs investissements combinent qualité et rentabilité</li>
+        <li>Un bon produit ou une bonne équipe ne suffit pas sans résultats</li>
+      </ul>
+
+      <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+    </div>
+  `;
+} else if (id === 'banques-centrales') {
+  document.getElementById("modal-content-inner").innerHTML = `
+    <div class='fiche-content'>
+      <h2>🏦 Banques Centrales et Politique Monétaire</h2>
+
+      <h3>Définition</h3>
+      <ul>
+        <li>Leur principal outil : la politique monétaire</li>
+        <li>Objectifs : stabilité des prix, croissance, emploi</li>
+        <li>Les banques centrales (ex : BCE, Fed) régulent la monnaie et l’économie</li>
+      </ul>
+
+      <h3>Outils</h3>
+      <ul>
+        <li><strong>Taux directeurs</strong> : influencent le crédit et l’épargne</li>
+        <li><strong>Quantitative easing</strong> : injection de liquidités dans l’économie</li>
+        <li><strong>Open market</strong> : achats/ventes de titres pour ajuster la masse monétaire</li>
+      </ul>
+
+      <h3>Effets</h3>
+      <ul>
+        <li>Baisse des taux = encouragement à l’investissement</li>
+        <li>Hausse des taux = frein à l’inflation mais pression sur les actions</li>
+        <li>Les annonces des banques centrales font souvent bouger les marchés</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>Les banques centrales influencent indirectement la Bourse</li>
+        <li>Comprendre leurs décisions aide à anticiper les tendances</li>
+        <li>Attention aux "chocs" de communication (ex : surprise sur les taux)</li>
+      </ul>
+
+      <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+    </div>
+  `;
+}else if (id === 'biais-cognitifs') {
+  document.getElementById("modal-content-inner").innerHTML = `
+    <div class='fiche-content'>
+      <h2>🧠 Biais Cognitifs en Bourse</h2>
+
+      <h3>Définition</h3>
+      <ul>
+        <li>Erreurs de jugement influencées par nos émotions ou habitudes</li>
+        <li>Présents même chez les investisseurs expérimentés</li>
+        <li>Peuvent conduire à des décisions irrationnelles</li>
+      </ul>
+
+      <h3>Exemples</h3>
+      <ul>
+        <li><strong>Ancrage</strong> : se fixer sur un prix passé sans lien avec la réalité</li>
+        <li><strong>Effet de panurge</strong> : suivre la foule sans réfléchir</li>
+        <li><strong>Biais de confirmation</strong> : chercher des infos qui confirment nos idées</li>
+      </ul>
+
+      <h3>Conséquences</h3>
+      <ul>
+        <li>Achat impulsif ou vente trop rapide</li>
+        <li>Surexposition à un actif "à la mode"</li>
+        <li>Difficulté à reconnaître une erreur</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>Être conscient de ses biais améliore ses décisions</li>
+        <li>Garder une approche rationnelle et structurée</li>
+        <li>Un plan d’investissement aide à éviter les pièges mentaux</li>
+      </ul>
+
+      <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+    </div>
+  `;
+} else if (id === 'panique-bulles') {
+  document.getElementById("modal-content-inner").innerHTML = `
+    <div class='fiche-content'>
+      <h2>📉 Comportement de Panique et Bulles Spéculatives</h2>
+
+      <h3>Définition</h3>
+      <ul>
+        <li><strong>Panique</strong> : ventes massives provoquées par la peur</li>
+        <li>Deux phénomènes opposés mais souvent liés dans les cycles</li>
+        <li><strong>Bulle spéculative</strong> : hausse excessive des prix déconnectée des fondamentaux</li>
+      </ul>
+
+      <h3>Mécanismes</h3>
+      <ul>
+        <li>Euphorie collective → achat irraisonné</li>
+        <li>Suivi aveugle de la foule → montée rapide des prix</li>
+        <li>Éclatement brutal → panique, ventes précipitées</li>
+      </ul>
+
+      <h3>Exemples</h3>
+      <ul>
+        <li><strong>Bulle Internet (2000)</strong> : valorisations absurdes de startups tech</li>
+        <li><strong>Subprimes (2008)</strong> : excès sur l’immobilier puis effondrement</li>
+        <li><strong>Cryptos (2021)</strong> : envolée puis chute brutale de certaines monnaies</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>La peur et la cupidité dominent souvent les marchés</li>
+        <li>Savoir rester rationnel est un avantage durable</li>
+        <li>Méfie-toi des promesses "trop belles pour être vraies"</li>
+      </ul>
+
+      <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+    </div>
+  `;
+} else if (id === 'correlation-actifs') {
+  document.getElementById("modal-content-inner").innerHTML = `
+    <div class='fiche-content'>
+      <h2>🔗 Corrélation entre Actifs</h2>
+
+      <h3>Définition</h3>
+      <ul>
+        <li>Relation entre les variations de deux actifs</li>
+        <li><strong>Corrélation positive</strong> : ils évoluent dans le même sens</li>
+        <li><strong>Corrélation négative</strong> : ils évoluent en sens opposé</li>
+      </ul>
+
+      <h3>Utilité</h3>
+      <ul>
+        <li>Mieux diversifier un portefeuille</li>
+        <li>Réduire les risques globaux en combinant des actifs non liés</li>
+        <li>Limiter l'impact d’un choc sur l’ensemble du portefeuille</li>
+      </ul>
+
+      <h3>Exemples</h3>
+      <ul>
+        <li><strong>Actions & obligations</strong> : souvent corrélation faible ou négative</li>
+        <li><strong>Or & marché actions</strong> : valeur refuge en période de crise</li>
+        <li><strong>Deux actions du même secteur</strong> : souvent fortement corrélées</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>Les corrélations peuvent changer dans le temps, surtout en crise</li>
+        <li>Analyser la corrélation permet une gestion plus fine du risque</li>
+        <li>Diversifier, ce n’est pas multiplier les titres, mais varier les comportements</li>
+      </ul>
+
+      <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+    </div>
+  `;
+} else if (id === 'cycles-economiques-bourse') {
+  document.getElementById("modal-content-inner").innerHTML = `
+    <div class='fiche-content'>
+      <h2>📉 Cycles Économiques et Bourse</h2>
+
+      <h3>Définition</h3>
+      <ul>
+        <li>Ces cycles influencent fortement les marchés financiers</li>
+        <li>La bourse anticipe souvent les changements économiques</li>
+        <li>L’économie suit des phases répétitives : expansion, pic, récession, reprise</li>
+      </ul>
+
+      <h3>Phases clefs</h3>
+      <ul>
+        <li><strong>Expansion</strong> : croissance, baisse du chômage, hausse des marchés</li>
+        <li><strong>Récession</strong> : ralentissement, hausse du chômage, baisse des actions</li>
+        <li><strong>Reprise</strong> : redémarrage économique, retour de la confiance</li>
+      </ul>
+
+      <h3>Impacts</h3>
+      <ul>
+        <li>Les secteurs réagissent différemment selon les phases</li>
+        <li>Les investisseurs adaptent leurs portefeuilles aux prévisions</li>
+        <li>La bourse baisse souvent avant la récession et remonte avant la reprise</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>Comprendre le cycle aide à mieux positionner ses investissements</li>
+        <li>Les opportunités naissent souvent en période de pessimisme</li>
+        <li>Être en avance sur l’économie = avantage stratégique</li>
+      </ul>
+
+      <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+    </div>
+  `;
+} else if (id === 'etf-vs-fonds-mutuels') {
+  document.getElementById("modal-content-inner").innerHTML = `
+    <div class='fiche-content'>
+      <h2>📊 ETF vs Fonds Mutuels</h2>
+
+      <h3>Définition</h3>
+      <ul>
+        <li><strong>ETF</strong> : fonds indiciel coté en Bourse, réplique un indice</li>
+        <li><strong>Fonds mutuel</strong> : géré activement par un professionnel</li>
+        <li>Les deux regroupent plusieurs titres (actions, obligations…)</li>
+      </ul>
+
+      <h3>Différences</h3>
+      <ul>
+        <li><strong>Gestion</strong> : passive (ETF) vs active (fonds mutuel)</li>
+        <li><strong>Frais</strong> : très faibles pour les ETF, plus élevés pour les fonds gérés</li>
+        <li><strong>Liquidité</strong> : ETF achetés/vendus en direct comme des actions</li>
+      </ul>
+
+      <h3>Choix</h3>
+      <ul>
+        <li><strong>ETF</strong> : idéal pour débuter, suivre le marché à bas coût</li>
+        <li><strong>Fonds mutuel</strong> : choix plus personnalisé, mais plus cher</li>
+        <li>Les deux permettent une diversification immédiate</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>Les ETF offrent un bon compromis coût/simplicité</li>
+        <li>Un fonds actif doit battre le marché après les frais</li>
+        <li>Toujours comparer les performances nettes et les frais</li>
+      </ul>
+
+      <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+    </div>
+  `;
+} else if (id === 'inflation-et-investissement') {
+  document.getElementById("modal-content-inner").innerHTML = `
+    <div class='fiche-content'>
+      <h2>📈 Inflation et Investissement</h2>
+
+      <h3>Définition</h3>
+      <ul>
+        <li><strong>Inflation</strong> : hausse générale et durable des prix dans l’économie</li>
+        <li>Diminue le pouvoir d’achat si les revenus ne suivent pas</li>
+        <li>Impacte directement les rendements réels des placements</li>
+      </ul>
+
+      <h3>Effets</h3>
+      <ul>
+        <li><strong>Argent non investi</strong> = perte de valeur réelle</li>
+        <li>Certains actifs souffrent (obligations à taux fixe, cash)</li>
+        <li>D’autres résistent mieux (immobilier, actions, matières premières)</li>
+      </ul>
+
+      <h3>Stratégies</h3>
+      <ul>
+        <li>Miser sur les <strong>actifs réels</strong> : or, immobilier, actions solides</li>
+        <li>Privilégier les entreprises avec pouvoir de fixation des prix</li>
+        <li>Diversifier et rester investi pour suivre l’inflation sur le long terme</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>L’inflation est un ennemi invisible mais redoutable</li>
+        <li>Il faut protéger son épargne, pas juste la stocker</li>
+        <li>L’investissement est une arme contre l’érosion monétaire</li>
+      </ul>
+
+      <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+    </div>
+  `;
+} else if (id === 'investir-selon-horizon-de-temps') {
+  document.getElementById("modal-content-inner").innerHTML = `
+    <div class='fiche-content'>
+      <h2>⏳ Investir selon son Horizon de Temps</h2>
+
+      <h3>Définition</h3>
+      <ul>
+        <li>L'horizon de temps influence les choix d'actifs, la stratégie et la tolérance au risque</li>
+        <li>Plus l'horizon est long, plus le risque peut être absorbé</li>
+        <li>L’horizon de temps = durée pendant laquelle on peut laisser l’argent investi</li>
+      </ul>
+
+      <h3>Trois horizons</h3>
+      <ul>
+        <li><strong>Court terme (< 2 ans)</strong> : sécurité et liquidité prioritaires</li>
+        <li><strong>Moyen terme (2-5 ans)</strong> : équilibre entre rendement et prudence</li>
+        <li><strong>Long terme (> 5 ans)</strong> : potentiel de croissance, prise de risque mesurée</li>
+      </ul>
+
+      <h3>Conséquences</h3>
+      <ul>
+        <li><strong>Court terme</strong> : livrets, obligations courtes, fonds monétaires</li>
+        <li><strong>Moyen terme</strong> : diversification avec actions et obligations</li>
+        <li><strong>Long terme</strong> : actions, ETF, immobilier, capital-risque</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>Le temps est un facteur de rendement… mais aussi de sécurité</li>
+        <li>Ne pas risquer son capital si on en a besoin bientôt</li>
+        <li>Adapter l’investissement à ses projets concrets (études, achat, retraite…)</li>
+      </ul>
+
+      <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+    </div>
+  `;
+} else if (id === 'importance-de-la-patience') {
+  document.getElementById("modal-content-inner").innerHTML = `
+    <div class='fiche-content'>
+      <h2>⏳ L'Importance de la Patience</h2>
+
+      <h3>Définition</h3>
+      <ul>
+        <li>S'oppose à la recherche de gains rapides</li>
+        <li>Repose sur une vision long terme</li>
+        <li>Attitude clé pour laisser le temps faire fructifier ses investissements</li>
+      </ul>
+
+      <h3>Avantages</h3>
+      <ul>
+        <li>Bénéficie de l'effet de l’intérêt composé</li>
+        <li>Réduit le stress lié aux variations de court terme</li>
+        <li>Donne le temps aux entreprises de croître et délivrer de la valeur</li>
+      </ul>
+
+      <h3>Erreurs</h3>
+      <ul>
+        <li>Changer de stratégie à la moindre correction</li>
+        <li>Vendre trop tôt par peur de la baisse</li>
+        <li>Se lasser si les résultats ne sont pas immédiats</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>Le temps est un allié puissant quand on reste investi</li>
+        <li>La régularité surpasse l’impulsivité</li>
+        <li>Investir, ce n’est pas courir… c’est tenir</li>
+      </ul>
+
+      <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+    </div>
+  `;
+} else if (id === 'market-timing') {
+  document.getElementById("modal-content-inner").innerHTML = `
+    <div class='fiche-content'>
+      <h2>⏰ Le Market Timing : Mythe ou Réalité ?</h2>
+
+      <h3>Définition</h3>
+      <ul>
+        <li>Très séduisante en théorie, difficile en pratique</li>
+        <li>Basée sur la prévision des mouvements de marché</li>
+        <li>Stratégie consistant à acheter au plus bas et vendre au plus haut</li>
+      </ul>
+
+      <h3>Problèmes</h3>
+      <ul>
+        <li>Prédire les sommets et creux est presque impossible</li>
+        <li>Les meilleurs jours en bourse sont souvent imprévisibles</li>
+        <li>Rater quelques jours clés peut ruiner les performances</li>
+      </ul>
+
+      <h3>Limites</h3>
+      <ul>
+        <li>Investir régulièrement (DCA) pour lisser les fluctuations</li>
+        <li>Rester investi sur le long terme pour capter la croissance</li>
+        <li>Se concentrer sur la qualité des actifs, pas sur le moment</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>Le timing parfait est un mythe pour la majorité des investisseurs</li>
+        <li>La constance bat la prédiction</li>
+        <li>La patience et la discipline sont plus rentables que la précipitation</li>
+      </ul>
+
+      <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+    </div>
+  `;
+} else if (id === 'dividendes') {
+  document.getElementById("modal-content-inner").innerHTML = `
+    <div class='fiche-content'>
+      <h2>💰 Les Dividendes</h2>
+
+      <h3>Définition</h3>
+      <ul>
+        <li>Part des bénéfices redistribuée aux actionnaires</li>
+        <li>Versée en cash ou en actions, souvent régulièrement</li>
+        <li>Représente un revenu passif pour l’investisseur</li>
+      </ul>
+
+      <h3>Fonctionnement</h3>
+      <ul>
+        <li>Décidé par l’entreprise (non garanti)</li>
+        <li>Dates clés : détachement, paiement</li>
+        <li>Rendement = dividende ÷ prix de l’action</li>
+      </ul>
+
+      <h3>Utilité</h3>
+      <ul>
+        <li>Source de revenus récurrents</li>
+        <li>Peut indiquer la solidité d’une entreprise mature</li>
+        <li>Réinvestis, les dividendes accélèrent la croissance</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>Un bon dividende est durable, pas forcément élevé</li>
+        <li>Attention aux rendements trop attractifs (= risque caché)</li>
+        <li>Stratégie "dividende" = stabilité + long terme</li>
+      </ul>
+
+      <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+    </div>
+  `;
+} else if (id === 'money-management') {
+  document.getElementById("modal-content-inner").innerHTML = `
+    <div class='fiche-content'>
+      <h2>💸 Money Management</h2>
+
+      <h3>Définition</h3>
+      <ul>
+        <li>Gestion de la taille de ses positions et du capital investi</li>
+        <li>Vise à protéger son portefeuille des pertes excessives</li>
+        <li>Clé pour durer sur le long terme, même avec de bonnes stratégies</li>
+      </ul>
+
+      <h3>Principes</h3>
+      <ul>
+        <li>Ne jamais risquer plus d’un certain % par position (ex : 1-2 %)</li>
+        <li>Adapter la taille selon la volatilité et son profil</li>
+        <li>Répartir son capital pour éviter de tout perdre sur une seule erreur</li>
+      </ul>
+
+      <h3>Erreurs</h3>
+      <ul>
+        <li>Surinvestir dans une seule action ou un "coup sûr"</li>
+        <li>Ignorer les limites : absence de stop loss, gestion émotionnelle</li>
+        <li>Doubler une position perdante ("moyenner à la baisse" sans plan)</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>Gagner, c’est d’abord éviter de trop perdre</li>
+        <li>Une bonne stratégie mal gérée = pertes assurées</li>
+        <li>Le money management est une discipline, pas une option</li>
+      </ul>
+
+      <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+    </div>
+  `;
+} else if (id === 'price-earning-ratio') {
+  document.getElementById("modal-content-inner").innerHTML = `
+    <div class='fiche-content'>
+      <h2>📊 Price Earning Ratio (PER)</h2>
+
+      <h3>Définition</h3>
+      <ul>
+        <li><strong>PER</strong> = Prix de l’action ÷ Bénéfice par action (BPA)</li>
+        <li>Indique combien les investisseurs paient pour 1€ de bénéfice</li>
+        <li>Utilisé pour évaluer si une action est chère ou bon marché</li>
+      </ul>
+
+      <h3>Utilité</h3>
+      <ul>
+        <li>Comparer des entreprises d’un même secteur</li>
+        <li>Estimer la valorisation d’une entreprise</li>
+        <li>Aide à détecter les actions surévaluées ou sous-évaluées</li>
+      </ul>
+
+      <h3>Limites</h3>
+      <ul>
+        <li>Ne tient pas compte de la croissance future</li>
+        <li>Varie selon les secteurs (ex : tech vs industrie)</li>
+        <li>Basé sur des bénéfices parfois volatils ou manipulables</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>PER élevé = attentes fortes de croissance</li>
+        <li>PER faible = potentiel ou signal d’alerte</li>
+        <li>À croiser avec d’autres indicateurs (PEG, ROE…)</li>
+      </ul>
+
+      <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+    </div>
+  `;
+} else if (id === 'definir-son-profil-investisseur') {
+  document.getElementById("modal-content-inner").innerHTML = `
+    <div class='fiche-content'>
+      <h2>👤 Définir son Profil Investisseur</h2>
+
+      <h3>Définition</h3>
+      <ul>
+        <li>Permet d’adapter ta stratégie à ta situation personnelle</li>
+        <li>Outil clé pour investir en cohérence avec soi-même</li>
+        <li>L’horizon de temps = durée pendant laquelle on peut laisser l’argent investi</li>
+      </ul>
+
+      <h3>Trois horizons</h3>
+      <ul>
+        <li><strong>Prudent</strong> : priorité à la sécurité et stabilité</li>
+        <li><strong>Dynamique</strong> : accepte la volatilité pour viser la performance</li>
+        <li><strong>Équilibré</strong> : recherche d’un bon compromis entre risque et rendement</li>
+      </ul>
+
+      <h3>Facteurs</h3>
+      <ul>
+        <li><strong>Âge et situation financière</strong> (ex : épargne disponible, dettes)</li>
+        <li><strong>Objectifs</strong> : retraite, achat, revenus passifs, etc.</li>
+        <li><strong>Réaction face aux pertes</strong> (émotion, patience, discipline)</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>Il n’y a pas de bon ou mauvais profil, juste un profil adapté</li>
+        <li>Revoir son profil régulièrement selon l’évolution de sa vie</li>
+        <li>Un bon investissement commence par bien se connaître</li>
+      </ul>
+
+      <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+    </div>
+  `;
+} else if (id === 'short-selling-vente-a-decouvert') {
+  document.getElementById("modal-content-inner").innerHTML = `
+    <div class='fiche-content'>
+      <h2>📉 Short Selling (Vente à Découvert)</h2>
+
+      <h3>Définition</h3>
+      <ul>
+        <li>Vendre un actif qu’on ne possède pas, en pariant sur sa baisse</li>
+        <li>Technique risquée, souvent réservée aux investisseurs expérimentés</li>
+        <li>On le "loue", on le vend, puis on le rachète plus tard à un prix espéré plus bas</li>
+      </ul>
+
+      <h3>Fonctionnement</h3>
+      <ul>
+        <li>Emprunt de l’action via un courtier</li>
+        <li>Vente immédiate sur le marché</li>
+        <li>Rachat plus tard pour rendre l’action, avec profit (ou perte)</li>
+      </ul>
+
+      <h3>Risques</h3>
+      <ul>
+        <li>Perte potentielle illimitée si l’action monte</li>
+        <li>Effet boule de neige lors de "short squeeze"</li>
+        <li>Nécessite une gestion stricte du risque</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>Gagner à la baisse est possible, mais complexe</li>
+        <li>Les obligations protègent en période de volatilité</li>
+        <li>À utiliser avec prudence, idéalement avec un stop loss</li>
+      </ul>
+
+      <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+    </div>
+  `;
+} else if (id === 'stop-loss-take-profit') {
+  document.getElementById("modal-content-inner").innerHTML = `
+    <div class='fiche-content'>
+      <h2>🚫 Stop Loss & Take Profit</h2>
+
+      <h3>Définition</h3>
+      <ul>
+        <li><strong>Stop Loss</strong> : ordre de vente automatique pour limiter les pertes</li>
+        <li><strong>Take Profit</strong> : ordre de vente pour sécuriser un gain atteint</li>
+        <li>Outils essentiels pour gérer son capital et ses émotions</li>
+      </ul>
+
+      <h3>Utilité</h3>
+      <ul>
+        <li>Stoppe les pertes avant qu’elles ne deviennent trop grandes</li>
+        <li>Empêche de "tomber amoureux" d’une position perdante</li>
+        <li><strong>Take Profit</strong> évite de tout perdre après une belle hausse</li>
+      </ul>
+
+      <h3>Limites</h3>
+      <ul>
+        <li>Risque de sortir trop tôt d’une tendance haussière</li>
+        <li>Nécessite une stratégie claire en amont</li>
+        <li>À ajuster selon la volatilité du marché ou de l’actif</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>Toujours définir ses seuils avant d’entrer en position</li>
+        <li>Aide à respecter un plan sans agir sous pression</li>
+        <li>Discipline = pilier de l’investisseur à long terme</li>
+      </ul>
+
+      <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+    </div>
+  `;
+} else if (id === 'valeur-intrinseque-prix-marche') {
+  document.getElementById("modal-content-inner").innerHTML = `
+    <div class='fiche-content'>
+      <h2>📊 Valeur Intrinsèque vs Prix de Marché</h2>
+
+      <h3>Définition</h3>
+      <ul>
+        <li><strong>Valeur intrinsèque</strong> : estimation du "vrai" prix d’une action</li>
+        <li><strong>Prix de marché</strong> : ce que les investisseurs paient aujourd’hui</li>
+        <li>L’écart entre les deux crée des opportunités d’investissement</li>
+      </ul>
+
+      <h3>Objectif</h3>
+      <ul>
+        <li>Détecter les actions sous-évaluées ou surévaluées</li>
+        <li>Investir avec une marge de sécurité</li>
+        <li>Se baser sur l’analyse fondamentale, pas sur l’émotion</li>
+      </ul>
+
+      <h3>Écart typique</h3>
+      <ul>
+        <li><strong>Prix < Valeur</strong> = action potentiellement intéressante</li>
+        <li><strong>Prix > Valeur</strong> = risque de correction future</li>
+        <li>Le marché peut rester irrationnel longtemps</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>La valeur intrinsèque se calcule (modèles, prévisions)</li>
+        <li>Le prix de marché reflète l’offre, la demande et les émotions</li>
+        <li>Le bon investisseur fait la différence entre les deux</li>
+      </ul>
+
+      <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+    </div>
+  `;
+} else if (id === 'volatilite-mesure-impact') {
+  document.getElementById("modal-content-inner").innerHTML = `
+    <div class='fiche-content'>
+      <h2>📉 Volatilité : Mesure et Impact</h2>
+
+      <h3>Définition</h3>
+      <ul>
+        <li><strong>Volatilité</strong> : mesure de l’amplitude des variations de prix d’un actif</li>
+        <li><strong>Volatilité élevée</strong> = fluctuations importantes</li>
+        <li>Peut être perçue comme risque ou opportunité</li>
+      </ul>
+
+      <h3>Mesure</h3>
+      <ul>
+        <li><strong>Écart-type des rendements</strong> : indicateur statistique</li>
+        <li><strong>Indice VIX</strong> : mesure la volatilité attendue du S&P 500</li>
+        <li>Historique ou implicite (prévue par le marché)</li>
+      </ul>
+
+      <h3>Conséquences</h3>
+      <ul>
+        <li>Hausse de volatilité = incertitude, stress des investisseurs</li>
+        <li>Rend plus difficile la prédiction des prix</li>
+        <li>Impacte le choix des actifs et la taille des positions</li>
+      </ul>
+
+      <h3>À retenir</h3>
+      <ul>
+        <li>Volatilité ≠ perte, mais risque de mouvement brusque</li>
+        <li>À adapter selon ton profil : calme ou mouvementé ?</li>
+        <li>Plus de volatilité = plus d’opportunités mais aussi plus de prudence</li>
+      </ul>
+
+      <br><a href='#' onclick='openModal()'>← Retour aux fiches</a>
+    </div>
+  `;
+}
+
+}
+
+    function searchFiches(query) {
+      let fiches = document.querySelectorAll('.fiche-list a');
+      fiches.forEach(fiche => {
+        let text = fiche.textContent.toLowerCase();
+        if (text.includes(query.toLowerCase())) {
+          fiche.style.display = 'block';
+        } else {
+          fiche.style.display = 'none';
+        }
+      });
+    }
+   
+
+
+  </script>
+
+<!-- Section Contact -->
+<section id="contact" style="background-color: #fff8dc; padding: 60px 20px; font-family: 'Segoe UI', sans-serif;">
+  <div style="max-width: 700px; margin: 0 auto; text-align: center;">
+    <h2 style="font-size: 2em; margin-bottom: 10px;">Contact</h2>
+    <p style="font-size: 1.1em; color: #333;">Une question ou une suggestion ? Envoyez-nous un message, nous vous répondrons rapidement !</p>
+
+    <form style="margin-top: 30px; text-align: left; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+      <label for="name" style="display: block; margin-bottom: 5px; font-weight: 600;">Nom</label>
+      <input type="text" id="name" name="name" required
+             style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 20px;">
+
+      <label for="email" style="display: block; margin-bottom: 5px; font-weight: 600;">Email</label>
+      <input type="email" id="email" name="email" required
+             style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 20px;">
+
+      <label for="message" style="display: block; margin-bottom: 5px; font-weight: 600;">Message</label>
+      <textarea id="message" name="message" rows="5" required
+                style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;"></textarea>
+
+      <div style="text-align: center; margin-top: 25px;">
+        <button type="submit" style="padding: 12px 30px; background-color: #fbbf24; color: #333; border: none; border-radius: 8px; font-size: 1em; cursor: pointer;">
+          Envoyer
+        </button>
+      </div>
+    </form>
+  </div>
+  
+</section>
+
+<!-- MODAL VIDÉOS -->
+<div id="videoModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeVideos()">&times;</span>
+    <h2>🎬 Vidéos éducatives</h2>
+
+    <!-- Liste des titres -->
+    <ul id="videoList" style="list-style: none; padding-left: 0;">
+      <li><a href="#" onclick="loadVideo('1HNa6s8sEgHCH08NOqXmojyOgZ6zTfVri', 'Les Frais')">Les Frais</a></li>
+      <li><a href="#" onclick="loadVideo('1kUbXmqJ8xEzaxzz0ojhiq2SPGR-MYdHa', 'Le PEA')">Le PEA</a></li>
+      <li><a href="#" onclick="loadVideo('1wV9MAOQptH23FamD1d9YMY5xgBEVTzGP', 'Arnaques en investissement')">Arnaques en investissement</a></li>
+    </ul>
+
+    <!-- Conteneur vidéo (iframe) -->
+    <div id="videoPlayerContainer" style="display: none; margin-top: 20px;">
+      <h3 id="videoTitle" style="margin-bottom: 10px;"></h3>
+      <iframe
+        id="videoIframe"
+        width="100%"
+        height="400"
+        allowfullscreen
+        style="border-radius: 10px; display: none;"
+      ></iframe>
+      <br />
+      <button onclick="returnToList()" style="margin-top: 15px;" class="btn btn-secondary">← Retour à la liste</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openVideos() {
+    document.getElementById("videoModal").style.display = "flex";
+  }
+
+  function closeVideos() {
+    returnToList();
+    document.getElementById("videoModal").style.display = "none";
+  }
+
+  function loadVideo(driveId, title) {
+    const embedUrl = `https://drive.google.com/file/d/${driveId}/preview`;
+    document.getElementById("videoIframe").src = embedUrl;
+    document.getElementById("videoTitle").textContent = title;
+    document.getElementById("videoList").style.display = "none";
+    document.getElementById("videoPlayerContainer").style.display = "block";
+    document.getElementById("videoIframe").style.display = "block";
+  }
+
+  function returnToList() {
+    document.getElementById("videoIframe").src = "";
+    document.getElementById("videoIframe").style.display = "none";
+    document.getElementById("videoPlayerContainer").style.display = "none";
+    document.getElementById("videoList").style.display = "block";
+    document.getElementById("videoTitle").textContent = "";
+  }
+</script>
+
+
+
+
+ 
+  <script>document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("showAbout").addEventListener("click", function (e) {
+      e.preventDefault();
+  
+      const content = `
+        <p>Akinvestor est une application éducative développée dans le cadre du projet P2IP à l'ESILV.</p>
+        <p>Notre mission est de rendre la finance plus accessible, plus compréhensible et plus ludique pour les étudiants et les jeunes actifs.</p>
+        <p><strong>Grâce à Akinvestor, vous avez accès à :</strong></p>
+        <ul>
+          <li>des fiches synthétiques pour réviser efficacement,</li>
+          <li>des quizz interactifs pour tester vos connaissances,</li>
+          <li>des vidéos explicatives pour mieux comprendre les concepts clés,</li>
+          <li>et bien plus à venir !</li>
+        </ul>
+        <p><em>Projet encadré par l’ESILV</em><br>
+        <em>Année 2025</em></p>
+      `;
+  
+      document.getElementById("aboutModalBody").innerHTML = content;
+    });
+  });
+  </script>
+  
+    
+  
+
+<footer>
+  <p>&copy; 2025 Akinvestor - Tous droits réservés.</p>
+</footer>
+
+<!-- Modal Quiz Interactifs -->
+<div class="modal" id="quizModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeQuizModal()">&times;</span>
+    <h3 style="margin-bottom: 20px;">Choisissez une catégorie de quiz</h3>
+    <ul style="list-style: none; padding: 0;">
+      <li><a href="#" data-toggle="modal" data-target="#modalComptabilite" onclick="closeQuizModal()">📘 Comptabilité</a></li>
+      <li><a href="#" data-toggle="modal" data-target="#modalMarches" onclick="closeQuizModal()">📈 Marchés financiers</a></li>
+      <li><a href="#" data-toggle="modal" data-target="#modalInvestissement" onclick="closeQuizModal()">💼 Investissement</a></li>
+      <li><a href="#" data-toggle="modal" data-target="#modalAnalyse" onclick="closeQuizModal()">📊 Analyse financière</a></li>
+    </ul>
+  </div>
+</div>
+<script>
+  function openQuizModal() {
+    document.getElementById("quizModal").style.display = "flex";
+  }
+
+  function closeQuizModal() {
+    document.getElementById("quizModal").style.display = "none";
+  }
+</script>
+
+<!-- MODALE Connexion / Inscription -->
+<div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="authModalLabel">Connexion / Inscription</h5>
+        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <input type="email" id="email" class="form-control mb-2" placeholder="Email" />
+        <input type="password" id="password" class="form-control mb-2" placeholder="Mot de passe" />
+        <input type="text" id="prenom" class="form-control mb-2" placeholder="Prénom (optionnel)" />
+        <input type="text" id="nom" class="form-control mb-2" placeholder="Nom (optionnel)" />
+        <button class="btn btn-primary btn-block" onclick="loginUser()">Se connecter</button>
+        <button class="btn btn-secondary btn-block" onclick="registerUser()">Créer un compte</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    updateProfile
+  } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyB9YgE5vxbunAcz3q7dABsg2UgAqML1MRE",
+    authDomain: "akinvestor-fd508.firebaseapp.com",
+    projectId: "akinvestor-fd508",
+    appId: "1:335694421477:web:64af9fe61189b5343fa30c"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // Fonction de connexion
+  window.loginUser = async function () {
+    const email = document.getElementById("login-email").value;
+    const password = document.getElementById("login-password").value;
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      alert("Connexion réussie !");
+      location.reload();
+    } catch (error) {
+      alert("Erreur de connexion : " + error.message);
+    }
+  };
+
+  // Fonction de création
+  window.registerUser = async function () {
+    const email = document.getElementById("register-email").value;
+    const password = document.getElementById("register-password").value;
+    const name = document.getElementById("register-name").value;
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(userCredential.user, { displayName: name });
+      alert("Compte créé !");
+      location.reload();
+    } catch (error) {
+      alert("Erreur d'inscription : " + error.message);
+    }
+  };
+</script>
+<!-- Modal Authentification -->
+<div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content p-4">
+      <h5 class="modal-title mb-3" id="authModalLabel">Connexion / Inscription</h5>
+      
+      <!-- Connexion -->
+      <div>
+        <h6>Connexion</h6>
+        <input type="email" id="login-email" placeholder="Email" class="form-control mb-2">
+        <input type="password" id="login-password" placeholder="Mot de passe" class="form-control mb-2">
+        <button class="btn btn-primary w-100 mb-3" onclick="loginUser()">Se connecter</button>
+      </div>
+
+      <hr>
+
+      <!-- Inscription -->
+      <div>
+        <h6>Créer un compte</h6>
+        <input type="text" id="register-name" placeholder="Prénom" class="form-control mb-2">
+        <input type="email" id="register-email" placeholder="Email" class="form-control mb-2">
+        <input type="password" id="register-password" placeholder="Mot de passe" class="form-control mb-2">
+        <button class="btn btn-success w-100" onclick="registerUser()">Créer mon compte</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>
